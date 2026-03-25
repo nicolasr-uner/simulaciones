@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+*.spec
+
+# Base de datos local
+*.db
+*.sqlite3
+
+# PDFs de prueba / datos sensibles
+datos_prueba/
+*.pdf
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
