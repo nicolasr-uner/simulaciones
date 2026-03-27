@@ -14,7 +14,11 @@ build/
 
 # PDFs de prueba / datos sensibles
 datos_prueba/
+pdfs/
 *.pdf
+
+# Reportes generados (outputs)
+reporte_simulaciones.xlsx
 
 # IDEs
 .vscode/
