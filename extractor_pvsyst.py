@@ -20,6 +20,10 @@ from pathlib import Path
 import pdfplumber
 
 
+class NotPVsystError(ValueError):
+    """Se lanza cuando el PDF no parece ser un reporte válido de PVsyst."""
+
+
 MONTHS = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December",
@@ -157,6 +161,15 @@ def extract_metrics(pdf_path: str) -> dict:
         "p99": _extract_probability_metrics(text, "99"),
         "e_grid_monthly_mwh": _extract_monthly_egrid(text),
     }
+
+    # Validar que el PDF tenga al menos los campos mínimos esperados de PVsyst
+    p50_ok = metrics["p50"]["annual_energy_mwh"] is not None
+    monthly_ok = any(v is not None for v in metrics["e_grid_monthly_mwh"].values())
+    if not p50_ok and not monthly_ok:
+        raise NotPVsystError(
+            f"'{path.name}' no contiene datos de PVsyst reconocibles "
+            "(no se encontró producción P50 ni tabla mensual E_Grid)."
+        )
 
     return metrics
 
